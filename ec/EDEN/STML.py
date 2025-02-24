@@ -135,7 +135,9 @@ if selection == "Accueil":
                 <div class="film-card">                    
                     <img src="{eden_url}" width="850">
                     <p>Il propose une programmation variée allant des films récents aux classiques, et est un lieu de rencontre pour tous les amoureux du 7ème art.</p> 
-                    <p>Venez découvrir une expérience cinématographique dans un cadre chaleureux et convivial ! </p>                   
+                    <p>Venez découvrir une expérience cinématographique dans un cadre chaleureux et convivial ! </p> 
+                    <a href="{imdb_lien}" target="_blank">
+                    <p>RESERVEZ VOS PLACES ICI !!</p> </a>
                     
                 </div>
                 """,
