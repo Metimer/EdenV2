@@ -136,7 +136,7 @@ if selection == "Accueil":
                     <img src="{eden_url}" width="850">
                     <p>Il propose une programmation variée allant des films récents aux classiques, et est un lieu de rencontre pour tous les amoureux du 7ème art.</p> 
                     <p>Venez découvrir une expérience cinématographique dans un cadre chaleureux et convivial ! </p> 
-                    <a href="{imdb_lien}" target="_blank">
+                    <a href="https://www.allocine.fr/seance/salle_gen_csalle=P0402.html" target="_blank">
                     <p>RESERVEZ VOS PLACES ICI !!</p> </a>
                     
                 </div>
