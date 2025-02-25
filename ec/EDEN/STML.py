@@ -93,6 +93,32 @@ st.markdown(
     align-items: center; 
     justify-content: center;
 }
+
+/* Style des cartes */
+    .film-card2 {
+        background-color: #2C2F33 ;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+    
+    .film-card2 h1 {
+    font-size: 14px;
+    color: #FFD700;
+    font-family: "Georgia", serif;
+    height: 50px;  
+    text-align: center;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    }
+    .film-card2 img {
+        border-radius: 10px;
+        margin-bottom: 10px;
+        height: 280px;
+    }
     """,
     unsafe_allow_html=True
 )
@@ -263,7 +289,7 @@ elif selection == "Catalogue Films":
 
     if not selected_film.empty:
         poster_path = selected_film['poster'].values[0]
-        poster_url = 'https://image.tmdb.org/t/p/original' + poster_path
+        poster_url = 'https://image.tmdb.org/t/p/w500' + poster_path
         imdb_id = selected_film['tconst'].values[0]
         imdb_lien = f"https://www.imdb.com/title/{imdb_id}/"
 
@@ -341,14 +367,14 @@ elif selection == "Assistant de recommandations":
 
                         if not movie_info.empty:
                             poster = movie_info["poster"].values[0] if "poster" in movie_info else ""
-                            poster_url2 = 'https://image.tmdb.org/t/p/original' + poster
+                            poster_url2 = 'https://image.tmdb.org/t/p/w500' + poster
                             imdb = movie_info['tconst'].values[0]
                             imdb_url = f"https://www.imdb.com/title/{imdb}/"
 
                             with cols[idx % 5]:
                                 st.markdown(f"""
-                                            <div class="film-card">
-                                            <h4>{movie_title}</h4>  
+                                            <div class="film-card2">
+                                            <h1>{movie_title}</h1>  
                                             <a href="{imdb_url}" target="_blank">
                                             <img src="{poster_url2}" width="200"></a>                                                             
                                             </div>
