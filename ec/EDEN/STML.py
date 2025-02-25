@@ -83,14 +83,16 @@ st.markdown(
         font-family: "Georgia", serif; /* Police élégante et disponible par défaut */
     }
 
-    /* Style des titres des films recommandés */
-    .film-card-reco h3 {
-        font-size: 14px; /* Taille de police réduite */
-        text-align: center;
-        color: #FFD700;
-        font-family: "Georgia", serif;
-    }
-    </style>
+    .film-card h4 {
+    font-size: 14px;
+    color: #FFD700;
+    font-family: "Georgia", serif;
+    height: 50px;  
+    text-align: center;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
     """,
     unsafe_allow_html=True
 )
@@ -104,7 +106,7 @@ loading_gif = "http://lepassetempsderose.l.e.pic.centerblog.net/2faa69ad.gif"
 gif_container = st.empty()
 
 # Afficher le GIF dans le conteneur
-gif_container.image(loading_gif, width=800)
+gif_container.image(loading_gif, use_container_width=True)
 
 @st.cache_data
 def load_data():
@@ -159,6 +161,7 @@ def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, wei
     recommendations = {}
 
     # Recommandations basées sur title1
+    
     if title1:
         top_5_from_1 = get_top_movies(sim_scores_1, 5, exclude=[idx1,idx2] if idx1 is not None else [])
         recommendations[f"Top 5 basés sur {title1}"] = top_5_from_1
@@ -166,6 +169,7 @@ def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, wei
         already_recommended.update([dfml[dfml['titre_fr'] == title].index[0] for title, _ in top_5_from_1])
 
     # Recommandations basées sur title2
+    
     if title2:
         top_5_from_2 = get_top_movies(sim_scores_2, 5, exclude=already_recommended)
         recommendations[f"Top 5 basés sur {title2}"] = top_5_from_2
@@ -173,6 +177,7 @@ def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, wei
         already_recommended.update([dfml[dfml['titre_fr'] == title].index[0] for title, _ in top_5_from_2])
 
     # Recommandations basées sur la moyenne des 2 films
+    
     if title1 and title2:
         top_5_combined = get_top_movies(combined_similarity, 5, exclude=already_recommended)
         recommendations["Top 5 basés sur la moyenne des 2 films"] = top_5_combined
@@ -180,6 +185,7 @@ def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, wei
         already_recommended.update([dfml[dfml['titre_fr'] == title].index[0] for title, _ in top_5_combined])
 
     # Recherche des films avec l'acteur
+    
     if actor:
         dfml['has_actor'] = dfml['acteur_actrice'].apply(lambda x: 1 if actor.lower() in str(x).lower() else 0)
         actor_movies = dfml[dfml['has_actor'] == 1].copy()
@@ -198,10 +204,12 @@ def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, wei
     return recommendations
 
 # Menu
+
 menu_options = ["Accueil", "Catalogue Films", "Assistant de recommandations", "Nos Partenaires"]
 selection = st.sidebar.selectbox("Choisissez une section", menu_options)
 
-# 🌟 **Accueil**
+# Accueil
+
 if selection == "Accueil":
     st.markdown('<div class="title"> Bienvenue au Cinéma Eden </div>', unsafe_allow_html=True)
     eden_url = "https://www.ville-lasouterraine.fr/app/uploads/2022/04/eden.jpg"
@@ -232,13 +240,15 @@ if selection == "Accueil":
         unsafe_allow_html=True
     )
 
-# 🎞 **Catalogue Films**
+# Catalogue Films
+
 elif selection == "Catalogue Films":
     st.markdown('<div class="title"> Catalogue des films </div>', unsafe_allow_html=True)
 
     film_choice = st.sidebar.selectbox("🎬 Choisissez un film", [""] + list(df['titre_fr'].unique()), index=0)
 
     # Si un film est sélectionné dans le catalogue, affiche sa fiche détaillée
+    
     selected_film = df[df['titre_fr'] == film_choice]
     if selected_film.empty:
         st.markdown(
@@ -258,26 +268,28 @@ elif selection == "Catalogue Films":
         imdb_lien = f"https://www.imdb.com/title/{imdb_id}/"
 
         # Carte film avec affiche
+        
         st.markdown(
             f"""
             <div class="film-card">
                 <h3>{film_choice}</h3>
                 <a href="{imdb_lien}" target="_blank">
                 <img src="{poster_url}" width="350"></a>                
-                <p><b>Genres :</b> {selected_film["genres"].values[0]}</p>
-                <p><b>Popularité :</b> {round(selected_film["popularite"].values[0], 2)}</p>
+                <p><b>Genres:</b> {selected_film["genres"].values[0]}</p>
+                <p><b>Popularité:</b> {round(selected_film["popularite"].values[0], 2)}</p>
                 <p><b>Date de sortie :</b> {selected_film["date_de_sortie"].values[0]}</p>
                 <p>{selected_film["synopsis"].values[0]}</p>
-                <p><b>Durée (minutes) :</b> {selected_film["duree"].values[0]}</p>
-                <p><b>Réalisateur(s) :</b> {selected_film["realisateurs"].values[0]}</p>
-                <p><b>Acteurs principaux :</b> {selected_film["acteurs_actrices"].values[0]}</p>
-                <p><b>Pays de production :</b> {selected_film["pays_production"].values[0]}</p>    
+                <p><b>Durée (minutes):</b> {selected_film["duree"].values[0]}</p>
+                <p><b>Réalisateur(s):</b> {selected_film["realisateurs"].values[0]}</p>
+                <p><b>Acteurs principaux:</b> {selected_film["acteurs_actrices"].values[0]}</p>
+                <p><b>Pays de production:</b> {selected_film["pays_production"].values[0]}</p>    
             </div>
             """,
             unsafe_allow_html=True
         )
 
-# 🤖 **Assistant de recommandation**
+# Assistant de recommandation
+
 elif selection == "Assistant de recommandations":
     st.markdown('<div class="title"> Assistant de recommandations </div>', unsafe_allow_html=True)
 
@@ -285,11 +297,6 @@ elif selection == "Assistant de recommandations":
     selected_movie = st.sidebar.selectbox("🎬 Choisissez un film", [""] + list(dfml['titre_fr'].unique()), index=0)
     selected_movie2 = st.sidebar.selectbox("🎬 Choisissez un 2ème film (optionnel)", [""] + list(dfml['titre_fr'].unique()), index=0)
     selected_actor = st.sidebar.selectbox("🎭 Choisissez un Acteur(rice) (optionnel)", (set(",".join(dfml['acteur_actrice'].dropna().to_list()).split(","))))
-    
-    def truncate_title(title, max_length=20):
-        if len(title) > max_length:
-            return title[:max_length] + "..."
-        return title
     
     if not selected_movie and not selected_movie2 and not selected_actor:
         st.markdown(
@@ -340,8 +347,8 @@ elif selection == "Assistant de recommandations":
 
                             with cols[idx % 5]:
                                 st.markdown(f"""
-                                            <div class="film-card-reco">
-                                            <h3>{truncate_title(movie_title)}</h3>  
+                                            <div class="film-card">
+                                            <h4>{movie_title}</h4>  
                                             <a href="{imdb_url}" target="_blank">
                                             <img src="{poster_url2}" width="200"></a>                                                             
                                             </div>
@@ -351,7 +358,7 @@ elif selection == "Assistant de recommandations":
             else:
                 st.write("❌ Aucune recommandation trouvée.")
 
-# 🏢 **Nos Partenaires**
+# Nos Partenaires
 elif selection == "Nos Partenaires":
     st.markdown('<div class="title"> Nos Partenaires </div>', unsafe_allow_html=True)
     part_url = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2e/22/87/3e/caption.jpg"
