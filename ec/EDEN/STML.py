@@ -153,7 +153,7 @@ gif_container.empty()  # Efface le GIF
 
 # Fonction de recommandation avec cache
 @st.cache_data
-def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.8, weight_pop=0.2):
+def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.9, weight_pop=0.1):
     dfml['titre_fr_lower'] = dfml['titre_fr'].str.lower()
 
     # Vérification des films existants
