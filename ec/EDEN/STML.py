@@ -137,7 +137,7 @@ gif_container.image(loading_gif, use_container_width=True)
 @st.cache_data
 def load_data():
     df = pd.read_csv('https://drive.google.com/uc?id=16jDWelG0YHTFIrFbGucCJtjUCh_L_gSz')
-    dfml = pd.read_csv('https://drive.google.com/uc?id=1_aPY57-dJzlOZu2Mkqcf97TS5PokD6MI')
+    dfml = pd.read_csv('https://drive.google.com/uc?id=1BfE0Li0Gfmdp9PfrKTRGkiVnQRRafKoS')
     dfml = dfml.fillna('')
     nltk.download('stopwords')
     french_stopwords = stopwords.words('french')
