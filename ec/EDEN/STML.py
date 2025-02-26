@@ -289,7 +289,7 @@ elif selection == "Catalogue Films":
 
     if not selected_film.empty:
         poster_path = selected_film['poster'].values[0]
-        poster_url = 'https://image.tmdb.org/t/p/w500' + poster_path
+        poster_url = 'https://image.tmdb.org/t/p/original' + poster_path
         imdb_id = selected_film['tconst'].values[0]
         imdb_lien = f"https://www.imdb.com/title/{imdb_id}/"
 
@@ -367,7 +367,7 @@ elif selection == "Assistant de recommandations":
 
                         if not movie_info.empty:
                             poster = movie_info["poster"].values[0] if "poster" in movie_info else ""
-                            poster_url2 = 'https://image.tmdb.org/t/p/w500' + poster
+                            poster_url2 = 'https://image.tmdb.org/t/p/original' + poster
                             imdb = movie_info['tconst'].values[0]
                             imdb_url = f"https://www.imdb.com/title/{imdb}/"
 
