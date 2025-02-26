@@ -137,7 +137,7 @@ gif_container.image(loading_gif, use_container_width=True)
 @st.cache_data
 def load_data():
     df = pd.read_csv('https://drive.google.com/uc?id=16jDWelG0YHTFIrFbGucCJtjUCh_L_gSz')
-    dfml = pd.read_csv('https://drive.google.com/uc?id=1eKynr3aUvqUQi5kxQumwAnWUeM_u7fqx')
+    dfml = pd.read_csv('https://drive.google.com/uc?id=1_aPY57-dJzlOZu2Mkqcf97TS5PokD6MI')
     dfml = dfml.fillna('')
     nltk.download('stopwords')
     french_stopwords = stopwords.words('french')
@@ -153,7 +153,7 @@ gif_container.empty()  # Efface le GIF
 
 # Fonction de recommandation avec cache
 @st.cache_data
-def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.85, weight_pop=0.15):
+def recommend_movies(title1, title2, actor, df, cosine_sim, weight_sim=0.8, weight_pop=0.2):
     dfml['titre_fr_lower'] = dfml['titre_fr'].str.lower()
 
     # Vérification des films existants
